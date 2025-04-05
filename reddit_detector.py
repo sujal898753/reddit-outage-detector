@@ -138,7 +138,7 @@ try:
         print(f"📊 ✅ Uploaded {len(rows_to_add)} rows to Google Sheets!")
     else:
         print("⚠️ No matching posts to upload.")
-        try:
+try:
     all_data = sheet.get_all_values()
     headers = all_data[0]
     data_rows = all_data[1:]
