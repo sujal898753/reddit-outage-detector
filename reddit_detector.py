@@ -139,7 +139,15 @@ try:
     else:
         print("⚠️ No matching posts to upload.")
 
+
 try:
+    if rows_to_add:
+        sheet.append_rows(rows_to_add, value_input_option="USER_ENTERED")
+        print(f"📊 ✅ Uploaded {len(rows_to_add)} rows to Google Sheets!")
+    else:
+        print("⚠️ No matching posts to upload.")
+
+    # Now safe to continue with deduplication
     all_data = sheet.get_all_values()
     headers = all_data[0]
     data_rows = all_data[1:]
@@ -150,7 +158,6 @@ try:
 
     for row in data_rows:
         try:
-            # Parse date and check if it's within the last 24 hours
             date_str = row[4]
             row_timestamp = datetime.strptime(date_str, "%Y-%m-%d %H:%M").replace(tzinfo=timezone.utc).timestamp()
 
@@ -160,14 +167,13 @@ try:
         except Exception as e:
             print(f"⚠️ Skipped row due to date parsing issue: {row} — {e}")
 
-    # Rewrite sheet with cleaned data + new entries
     sheet.clear()
     sheet.append_row(headers)
     sheet.append_rows(fresh_rows, value_input_option="USER_ENTERED")
     print(f"♻️ Cleaned {len(data_rows) - len(fresh_rows)} old or duplicate rows.")
 
 except Exception as e:
-    print(f"🚫 Failed during deduplication: {e}")
+    print(f"🚫 Error during upload or deduplication: {e}")
 
 
     # Rewrite sheet with cleaned data + new entries
