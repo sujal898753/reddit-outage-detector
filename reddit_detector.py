@@ -158,14 +158,17 @@ except Exception as e:
 # === Step 8: Add Last Updated Timestamp ===
 
 # === Step 8: Add Last Updated Timestamp ===
-try:
-    
-    now_ist = now_utc.astimezone(pytz_timezone("Asia/Kolkata"))
 
-    timestamp = (
- 
-        f"({now_ist.strftime('%Y-%m-%d %H:%M')} IST)"
-    )
+# === Step 8: Add Last Updated Timestamp (IST only) ===
+try:
+    now_ist = datetime.now(pytz_timezone("Asia/Kolkata"))
+    timestamp = now_ist.strftime("Last Updated: %Y-%m-%d %H:%M IST")
+
+    sheet.update('A1', timestamp)
+    print("🕒 Added last updated timestamp (IST).")
+except Exception as e:
+    print(f"⚠️ Failed to update timestamp: {e}")
+
 
     sheet.update('A1', timestamp)
     print("🕒 Added last updated timestamp (IST).")
