@@ -91,10 +91,12 @@ for subreddit in subreddits_to_check:
 print(f"✅ Fetched {len(results)} matching outage posts.")
 
 # === Step 4: Google Sheets Auth ===
-scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("google_sheets_creds.json", scope)
-client = gspread.authorize(creds)
 
+google_creds = json.loads(os.environ["GOOGLE_SHEETS_JSON"])
+
+scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+creds = Credentials.from_service_account_info(google_creds, scopes=scope)
+client = gspread.authorize(creds)
 sheet = client.open("Reddit Outages").sheet1
 
 # === Step 5: Define Game Subreddits (for classification) ===
