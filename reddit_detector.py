@@ -35,7 +35,7 @@ subreddits_to_check = [
     "Spotify", "DiscordApp", "Telegram", "Zoom", "Google", "Gmail", "Twitch", "Netflix",
     "Hulu", "PrimeVideo", "Uber", "DoorDash", "CashApp", "Venmo", "PayPal", "ChatGPT",
     "MidJourney", "CharacterAI", "Notion", "Canva", "Drive", "Outlook", "LinkedIn", "Teams",
-    "CapCut", "Adobe", "Dropbox", "Steam", "EpicGamesPC", "PlayStation", "Xbox"
+    "CapCut", "Adobe", "Dropbox", "Steam", "EpicGamesPC", "PlayStation", "Xbox", "XboxSupport"
 ]
 
 keywords = [
