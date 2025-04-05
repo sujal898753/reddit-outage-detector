@@ -51,7 +51,7 @@ for subreddit in subreddits_to_check:
     try:
         for post in reddit.subreddit(subreddit).new(limit=100):
             post_title = post.title.lower()
-            if any(keyword in post_title for keyword in keywords) and post.score >= 7:
+            if any(keyword in post_title for keyword in keywords) and post.score >= 3:
                 title_sentiment_score = analyzer.polarity_scores(post.title)['compound']
                 title_sentiment_label = (
                     "Positive" if title_sentiment_score > 0.2 else
