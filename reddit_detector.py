@@ -138,6 +138,7 @@ try:
         print(f"📊 ✅ Uploaded {len(rows_to_add)} rows to Google Sheets!")
     else:
         print("⚠️ No matching posts to upload.")
+
 try:
     all_data = sheet.get_all_values()
     headers = all_data[0]
@@ -158,6 +159,16 @@ try:
                 fresh_rows.append(row)
         except Exception as e:
             print(f"⚠️ Skipped row due to date parsing issue: {row} — {e}")
+
+    # Rewrite sheet with cleaned data + new entries
+    sheet.clear()
+    sheet.append_row(headers)
+    sheet.append_rows(fresh_rows, value_input_option="USER_ENTERED")
+    print(f"♻️ Cleaned {len(data_rows) - len(fresh_rows)} old or duplicate rows.")
+
+except Exception as e:
+    print(f"🚫 Failed during deduplication: {e}")
+
 
     # Rewrite sheet with cleaned data + new entries
     sheet.clear()
