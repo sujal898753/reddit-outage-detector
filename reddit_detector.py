@@ -137,5 +137,41 @@ try:
         print(f"📊 ✅ Uploaded {len(rows_to_add)} rows to Google Sheets!")
     else:
         print("⚠️ No matching posts to upload.")
+        try:
+    all_data = sheet.get_all_values()
+    headers = all_data[0]
+    data_rows = all_data[1:]
+
+    seen_urls = set()
+    fresh_rows = []
+    cutoff_time = datetime.now(timezone.utc).timestamp() - 86400  # 24 hrs ago
+
+    for row in data_rows:
+        try:
+            # Parse date and check if it's within the last 24 hours
+            date_str = row[4]
+            row_timestamp = datetime.strptime(date_str, "%Y-%m-%d %H:%M").replace(tzinfo=timezone.utc).timestamp()
+
+            if row[3] not in seen_urls and row_timestamp >= cutoff_time:
+                seen_urls.add(row[3])
+                fresh_rows.append(row)
+        except Exception as e:
+            print(f"⚠️ Skipped row due to date parsing issue: {row} — {e}")
+
+    # Rewrite sheet with cleaned data + new entries
+    sheet.clear()
+    sheet.append_row(headers)
+    sheet.append_rows(fresh_rows, value_input_option="USER_ENTERED")
+    print(f"♻️ Cleaned {len(data_rows) - len(fresh_rows)} old or duplicate rows.")
+except Exception as e:
+    print(f"🚫 Failed during deduplication: {e}")
+
+# === Step 8: Add Last Updated Timestamp ===
+try:
+    last_updated = datetime.now(timezone.utc).strftime("Last Updated: %Y-%m-%d %H:%M UTC")
+    sheet.update('A1', last_updated)
+    print("🕒 Added last updated timestamp.")
+except Exception as e:
+    print(f"⚠️ Failed to update timestamp: {e}")
 except Exception as e:
     print(f"🚫 Failed to upload to Sheets: {e}")
