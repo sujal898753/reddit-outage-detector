@@ -156,9 +156,18 @@ except Exception as e:
     print(f"🚫 Error during upload or deduplication: {e}")
 
 # === Step 8: Add Last Updated Timestamp ===
+
+# === Step 8: Add Last Updated Timestamp ===
 try:
-    last_updated = datetime.now(timezone.utc).strftime("Last Updated: %Y-%m-%d %H:%M UTC")
-    sheet.update('A1', last_updated)
-    print("🕒 Added last updated timestamp.")
+    
+    now_ist = now_utc.astimezone(pytz_timezone("Asia/Kolkata"))
+
+    timestamp = (
+ 
+        f"({now_ist.strftime('%Y-%m-%d %H:%M')} IST)"
+    )
+
+    sheet.update('A1', timestamp)
+    print("🕒 Added last updated timestamp (IST).")
 except Exception as e:
     print(f"⚠️ Failed to update timestamp: {e}")
