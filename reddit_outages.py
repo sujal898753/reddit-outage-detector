@@ -1,4 +1,6 @@
 import praw
+import os
+import json
 import gspread
 import time
 import nltk
@@ -9,11 +11,12 @@ from google.oauth2.service_account import Credentials
 from datetime import datetime, timezone
 
 # === Step 1: Reddit API Setup ===
+
 reddit = praw.Reddit(
-    client_id="1PTxDvHl-WfVkU7ED6Nrvg",
-    client_secret="3EZ46bXt5fPBqCj4skh-52ixZcEDGQ",
-    username="Moneybeast_blog",
-    password="GameFixer2025",
+    client_id=os.environ["REDDIT_CLIENT_ID"],
+    client_secret=os.environ["REDDIT_CLIENT_SECRET"],
+    username=os.environ["REDDIT_USERNAME"],
+    password=os.environ["REDDIT_PASSWORD"],
     user_agent="script:reddit.outage.tracker:v1.0 (by u/Moneybeast_blog)"
 )
 
