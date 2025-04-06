@@ -160,7 +160,7 @@ except Exception as e:
 # === Step 9: Add GitHub Run Timestamp to Bottom (IST Time) ===
 try:
     india_tz = pytz_timezone("Asia/Kolkata")
-    github_run_time = datetime.now(india_tz).strftime("GitHub Last Run: %Y-%m-%d %H:%M IST")
+    github_run_time = datetime.now(india_tz).strftime("🕒 Last Synced: %Y-%m-%d %H:%M IST")
 
     # Find the last row (existing data) and add the timestamp to the next row
     last_row = len(sheet.get_all_values()) + 1
