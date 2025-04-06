@@ -161,7 +161,7 @@ try:
     github_run_time = datetime.now(india_tz).strftime("GitHub Last Run: %Y-%m-%d %H:%M IST")
     
     # You can write it at A2 (or any other dedicated cell)
-    sheet.update('A2', github_run_time)
+    sheet.update('Z1', github_run_time)
 
     print("🕒 GitHub run timestamp updated in Google Sheet.")
 except Exception as e:
