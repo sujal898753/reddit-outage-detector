@@ -155,6 +155,19 @@ try:
 except Exception as e:
     print(f"🚫 Error during upload or deduplication: {e}")
 
+# === Step 9: Add GitHub Action Run Timestamp (in IST) ===
+try:
+    india_tz = pytz_timezone("Asia/Kolkata")
+    github_run_time = datetime.now(india_tz).strftime("GitHub Last Run: %Y-%m-%d %H:%M IST")
+    
+    # You can write it at A2 (or any other dedicated cell)
+    sheet.update('A2', github_run_time)
+
+    print("🕒 GitHub run timestamp updated in Google Sheet.")
+except Exception as e:
+    print(f"⚠️ Failed to update GitHub timestamp in Sheet: {e}")
+
+
 # === Step 8: Add Last Updated Timestamp ===
 
 # === Step 8: Add Last Updated Timestamp ===
